@@ -24,19 +24,15 @@ export default function LandingPage() {
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   /**
-   * Auto-login function
-   * Logs in as demo user and redirects to dashboard
+   * Auto-login function (generic)
+   * @param userName - User name to login with
+   * @param password - Password to use
+   * @param userType - Type of user for toast message
    */
-  const handleTryDemo = async () => {
+  const handleAutoLogin = async (userName: string, password: string, userType: string) => {
     setIsLoggingIn(true);
 
     try {
-      // Get demo credentials from environment variables
-      const demoUserName =
-        process.env.NEXT_PUBLIC_DEMO_USER_NAME || "Demo User";
-      const demoPassword =
-        process.env.NEXT_PUBLIC_DEMO_USER_PASSWORD || "Demo123!";
-
       // Call the login API
       const response = await fetch("/api/auth/login", {
         method: "POST",
@@ -44,15 +40,15 @@ export default function LandingPage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: demoUserName,
-          password: demoPassword,
+          name: userName,
+          password: password,
         }),
       });
 
       const data = await response.json();
 
       if (data.success) {
-        toast.success("Welcome to the demo!", {
+        toast.success(`Welcome, ${userType}!`, {
           description: "Redirecting to dashboard...",
         });
 
@@ -76,6 +72,28 @@ export default function LandingPage() {
     }
   };
 
+  /**
+   * Auto-login as regular user
+   */
+  const handleTryDemo = () => {
+    const demoUserName =
+      process.env.NEXT_PUBLIC_DEMO_USER_NAME || "Demo User";
+    const demoPassword =
+      process.env.NEXT_PUBLIC_DEMO_USER_PASSWORD || "Demo123!";
+    handleAutoLogin(demoUserName, demoPassword, "Demo User");
+  };
+
+  /**
+   * Auto-login as admin user
+   */
+  const handleTryAdminDemo = () => {
+    const adminUserName =
+      process.env.NEXT_PUBLIC_DEMO_ADMIN_NAME || "Demo Admin";
+    const adminPassword =
+      process.env.NEXT_PUBLIC_DEMO_ADMIN_PASSWORD || "Admin123!";
+    handleAutoLogin(adminUserName, adminPassword, "Admin User");
+  };
+
   if (isLoggingIn) {
     return (
       <div className="flex min-h-screen flex-col items-center justify-center bg-background">
@@ -93,7 +111,7 @@ export default function LandingPage() {
       <DemoBanner />
 
       {/* Hero Section */}
-      <Hero onTryDemo={handleTryDemo} />
+      <Hero onTryDemo={handleTryDemo} onTryAdminDemo={handleTryAdminDemo} />
 
       {/* Features Section */}
       <Features />
