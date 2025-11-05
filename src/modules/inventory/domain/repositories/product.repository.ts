@@ -1,0 +1,26 @@
+import { Repository } from "@/shared/types/common";
+import { PaginatedResult, PaginationOptions } from "@/shared/types/pagination";
+import { ProductEntity } from "../entities/product.entity";
+
+export interface ProductSearchCriteria {
+  query?: string;
+  category?: string;
+  brand?: string;
+  minPrice?: number;
+  maxPrice?: number;
+  active?: boolean;
+}
+
+export interface ProductRepository extends Repository<ProductEntity> {
+  findAll(options?: PaginationOptions): Promise<PaginatedResult<ProductEntity>>;
+  findByCode(code: string): Promise<ProductEntity | null>;
+  findByBarcode(barcode: string): Promise<ProductEntity | null>;
+  findByCategory(category: string): Promise<ProductEntity[]>;
+  findByBrand(brand: string): Promise<ProductEntity[]>;
+  findById(id: string | number): Promise<ProductEntity | null>;
+  search(
+    query: string,
+    page?: number,
+    pageSize?: number
+  ): Promise<{ data: ProductEntity[]; total: number }>;
+}

@@ -1,0 +1,24 @@
+#!/bin/sh
+
+echo "📝 Validating commit message..."
+
+# Validação com commitlint
+npx --no-install commitlint --edit "$1"
+
+if [ $? -ne 0 ]; then
+  echo "❌ Commit message validation failed!"
+  echo ""
+  echo "📋 Expected format: type(scope): subject"
+  echo "📋 Example: feat(auth): add user authentication"
+  echo "📋 Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert"
+  exit 1
+fi
+
+# Checagem de assinaturas de IA proibidas
+if grep -q "🤖 Generated with \[Claude Code\]" "$1" || grep -q "Co-Authored-By: Claude <noreply@anthropic.com>" "$1"; then
+  echo "❌ Commits com assinatura de IA não são permitidos."
+  echo "   Remova qualquer referência a Claude Code ou Co-Authored-By: Claude."
+  exit 1
+fi
+
+echo "✅ Commit message is valid!"
