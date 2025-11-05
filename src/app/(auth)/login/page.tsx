@@ -78,10 +78,10 @@ export default function LoginPage() {
           </div>
           <div>
             <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              Santos & Penedo e Cia LTDA.
+              Demo Parts Co.
             </CardTitle>
             <p className="text-sm text-primary font-medium mt-1">
-              Filtros • Palhetas • Óleos Lubrificantes
+              Automotive Parts & Supplies
             </p>
           </div>
           <CardDescription className="text-muted-foreground">

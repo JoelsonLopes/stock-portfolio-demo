@@ -795,7 +795,7 @@ export function generatePrintHTML(data: OrderPrintData): string {
   )}</p>
             <p>
               <strong>SGP - Sistema de Gestão de Pedidos</strong> |
-              Desenvolvido por <a href="https://www.linkedin.com/in/joelsonlopes/" target="_blank">Joelson Lopes</a>
+              System Generated Report
             </p>
           </div>
         </div>

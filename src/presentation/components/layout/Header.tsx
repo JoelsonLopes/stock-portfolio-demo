@@ -154,10 +154,10 @@ export function Header() {
                   <Package className="h-8 w-8 text-primary" />
                   <div>
                     <h2 className="text-lg font-bold text-primary">
-                      Santos & Penedo
+                      Demo Parts Co.
                     </h2>
                     <p className="text-xs text-muted-foreground">
-                      Filtros • Palhetas • Óleos Lubrificantes
+                      Automotive Parts & Supplies
                     </p>
                   </div>
                 </div>
@@ -252,7 +252,7 @@ export function Header() {
           >
             <Package className="h-6 w-6 sm:h-7 sm:w-7 md:h-8 md:w-8 text-primary flex-shrink-0" />
             <h1 className="text-sm sm:text-lg md:text-xl lg:text-2xl font-bold text-primary truncate">
-              Santos & Penedo
+              Demo Parts Co.
             </h1>
           </Link>
 

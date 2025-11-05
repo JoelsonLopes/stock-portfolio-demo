@@ -7,9 +7,9 @@ import SimpleLayout from "./simple-layout";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Santos & Penedo e Cia LTDA",
+  title: "Demo Parts Co. - Stock Management",
   description:
-    "Sistema de gestão de estoque - Filtros, Palhetas e Óleos Lubrificantes",
+    "Stock Management System - Automotive Parts & Supplies Demo",
   icons: {
     icon: [
       {

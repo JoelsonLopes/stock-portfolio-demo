@@ -193,7 +193,7 @@ export default function PriceListPage() {
 
       // Título
       doc.setFontSize(20);
-      doc.text("Santos & Penedo - Lista de Preços", 14, 20);
+      doc.text("Demo Parts Co. - Price List", 14, 20);
 
       // Informações do filtro
       doc.setFontSize(10);
@@ -287,7 +287,7 @@ export default function PriceListPage() {
       const discountName = discounts.find(d => d.discount_percentage.toString() === selectedDiscount)?.name || "Sem desconto";
 
       const headerData = [
-        ["Santos & Penedo - Lista de Preços"],
+        ["Demo Parts Co. - Price List"],
         [`Grupo: ${groupName}`],
         [`Desconto: ${discountName} (${selectedDiscount}%)`],
         [`Data: ${new Date().toLocaleDateString("pt-BR")}`],
