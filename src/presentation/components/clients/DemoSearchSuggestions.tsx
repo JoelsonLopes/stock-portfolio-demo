@@ -14,17 +14,17 @@ export function DemoSearchSuggestions({ onSearch, isLoading }: DemoSearchSuggest
     {
       category: "Pesquisas por Nome",
       examples: [
-        { query: "Silva", description: "Encontra clientes com sobrenome Silva" },
-        { query: "Auto", description: "Lista empresas com 'Auto' no nome" },
-        { query: "Maria", description: "Busca clientes chamados Maria" },
+        { query: "Silva", description: "Auto Center Silva (São Paulo)" },
+        { query: "Auto", description: "Auto Center Silva, Auto Peças Modelo" },
+        { query: "Carlos", description: "Carlos Ferreira (Brasília)" },
       ],
     },
     {
-      category: "Exemplos de CPF/CNPJ Reais",
+      category: "Exemplos de Clientes Reais",
       examples: [
-        { query: "00755705751", description: "Carlos Ferreira - CPF" },
-        { query: "04004473542891", description: "Auto Center Silva - CNPJ" },
-        { query: "00291216122", description: "João da Silva - CPF" },
+        { query: "Ana Costa", description: "Cliente de Fortaleza" },
+        { query: "Distribuidora AutoParts", description: "Cliente de Florianópolis" },
+        { query: "CLI-0001", description: "Auto Center Silva - código do cliente" },
       ],
     },
   ];

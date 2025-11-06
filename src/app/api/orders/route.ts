@@ -23,7 +23,7 @@ async function canUserAccessOrder(
 // ✅ FUNÇÃO DE VALIDAÇÃO: Verifica se cliente pertence ao usuário
 async function canUserAccessClient(
   supabase: any,
-  clientId: number,
+  clientId: string | number,
   userId: string,
   isAdmin: boolean
 ): Promise<boolean> {
@@ -370,13 +370,35 @@ export async function POST(request: NextRequest) {
 
     // ✅ VALIDAÇÃO DE SEGURANÇA: Verificar se o usuário pode criar pedidos para este cliente
     if (orderData.client_id) {
+      console.log("🔍 Validando acesso ao cliente:", {
+        client_id: orderData.client_id,
+        userId: userId,
+        isAdmin: currentUser.is_admin,
+      });
+
       const canAccess = await canUserAccessClient(
         supabase,
         orderData.client_id,
         userId,
         currentUser.is_admin
       );
+
+      console.log("✅ Resultado da validação:", canAccess);
+
       if (!canAccess) {
+        // Buscar informações do cliente para debug
+        const { data: clientDebug } = await supabase
+          .from("clients")
+          .select("id, code, client, user_id")
+          .eq("id", orderData.client_id)
+          .single();
+
+        console.error("❌ Acesso negado ao cliente:", {
+          clientDebug,
+          expectedUserId: userId,
+          actualUserId: clientDebug?.user_id,
+        });
+
         return NextResponse.json(
           { error: "Acesso negado: Cliente não pertence ao usuário" },
           { status: 403 }
@@ -461,6 +483,7 @@ export async function POST(request: NextRequest) {
         product_id: item.product_id,
         quantity: item.quantity,
         unit_price: item.unit_price,
+        subtotal: item.quantity * item.unit_price, // ✅ CORREÇÃO: Calcular subtotal
         original_unit_price: item.original_unit_price || item.unit_price,
         discount_id: item.discount_id,
         discount_percentage: item.discount_percentage || 0,

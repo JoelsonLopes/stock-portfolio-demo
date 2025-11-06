@@ -163,7 +163,7 @@ export class SupabaseClientRepository implements ClientRepository {
       let searchQuery = supabaseClient
         .select("*", { count: "exact" })
         .or(
-          `code.ilike.%${query}%,client.ilike.%${query}%,city.ilike.%${query}%,cnpj.ilike.%${query}%`
+          `code.ilike.%${query}%,client.ilike.%${query}%,name.ilike.%${query}%,city.ilike.%${query}%,cpf_cnpj.ilike.%${query}%,email.ilike.%${query}%,phone.ilike.%${query}%`
         )
         .range(start, start + pageSize - 1)
         .order("client");
@@ -218,7 +218,7 @@ export class SupabaseClientRepository implements ClientRepository {
       const userId = await this.getCurrentUserId();
       const currentUser = await this.getCurrentUser();
 
-      let query = supabase.from("clients").select("*").eq("cnpj", cnpj);
+      let query = supabase.from("clients").select("*").eq("cpf_cnpj", cnpj);
 
       // Filtro por usuário (admin vê todos, usuário normal apenas os seus)
       if (!currentUser?.is_admin) {
@@ -300,8 +300,9 @@ export class SupabaseClientRepository implements ClientRepository {
       const clientData: any = {
         code: entity.code,
         client: entity.client,
+        name: entity.client, // Usar o mesmo valor para name
         city: entity.city,
-        cnpj: entity.cnpj,
+        cpf_cnpj: entity.cnpj,
         user_id: entity.userId || userId, // Usar userId da entidade ou do usuário logado
         created_at: entity.createdAt.toISOString(),
         updated_at: entity.updatedAt?.toISOString() || new Date().toISOString(),
@@ -350,9 +351,9 @@ export class SupabaseClientRepository implements ClientRepository {
     return ClientEntity.create({
       id: data.id,
       code: data.code,
-      client: data.client,
+      client: data.client || data.name, // Usar client ou name
       city: data.city,
-      cnpj: data.cnpj,
+      cnpj: data.cpf_cnpj, // Mapear cpf_cnpj para cnpj
       userId: data.user_id,
       createdAt: new Date(data.created_at),
       updatedAt: data.updated_at ? new Date(data.updated_at) : undefined,

@@ -227,10 +227,8 @@ export function OrderForm({
 
   const handleClientSelect = (client: any) => {
     setSelectedClient(client);
-    // Garantir que client_id seja sempre number para consistência
-    const clientId =
-      typeof client.id === "string" ? parseInt(client.id) : client.id;
-    setFormData((prev) => ({ ...prev, client_id: clientId }));
+    // Client ID é UUID (string), não converter para número
+    setFormData((prev) => ({ ...prev, client_id: client.id }));
     setShowClientSelector(false);
   };
 

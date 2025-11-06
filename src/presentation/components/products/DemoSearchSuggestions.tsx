@@ -14,17 +14,17 @@ export function DemoSearchSuggestions({ onSearch, isLoading }: DemoSearchSuggest
     {
       category: "Pesquisas por Categoria",
       examples: [
-        { query: "filtro", description: "Encontra filtros de ar, óleo, combustível e cabine" },
-        { query: "óleo", description: "Lista todos os óleos disponíveis (sintético, mineral)" },
-        { query: "palheta", description: "Mostra palhetas universais e de silicone" },
+        { query: "filtro", description: "Filtro de Ar, Óleo, Combustível e Cabine" },
+        { query: "óleo", description: "Óleo 5W30, 10W40, 15W40, 20W50 (Sintético/Mineral)" },
+        { query: "palheta", description: "Palheta Universal e Palheta Silicone" },
       ],
     },
     {
-      category: "Códigos Reais de Produtos",
+      category: "Exemplos de Produtos Reais",
       examples: [
-        { query: "WOE342", description: "Filtro de Óleo - código específico" },
-        { query: "OL5W30-1L", description: "Óleo 5W30 Sintético 1L" },
-        { query: "PAL20", description: "Palheta Universal tamanho 20" },
+        { query: "Óleo 5W30 Sintético", description: "Produto mais vendido" },
+        { query: "Filtro de Óleo", description: "Item de alta demanda" },
+        { query: "Palheta Universal", description: "Produto popular" },
       ],
     },
   ];

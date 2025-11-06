@@ -134,8 +134,8 @@ export function ProductSearchModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="max-w-7xl mx-auto flex flex-col">
-        <DialogHeader>
+      <DialogContent className="max-w-7xl max-h-[90vh] mx-auto flex flex-col overflow-hidden">
+        <DialogHeader className="shrink-0">
           <DialogTitle className="flex items-center gap-2">
             <Package className="h-5 w-5" />
             Buscar Produto
@@ -146,78 +146,81 @@ export function ProductSearchModal({
           </DialogDescription>
         </DialogHeader>
 
-        {/* Campo de Busca */}
-        <form onSubmit={handleSearch} className="space-y-4">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              ref={searchInputRef}
-              type="text"
-              placeholder="Digite o código do produto (ex: PH4701)..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value.toUpperCase())}
-              onKeyDown={handleKeyDown}
-              className="pl-10 pr-10"
-              autoComplete="off"
-            />
-            {searchQuery && (
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => {
-                  setSearchQuery("");
-                  setHasSearched(false);
-                }}
-                className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            )}
-          </div>
+        {/* Área de conteúdo com scroll */}
+        <div className="flex-1 overflow-y-auto space-y-4 px-1">
+          {/* Campo de Busca */}
+          <form onSubmit={handleSearch} className="space-y-4 shrink-0">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+              <Input
+                ref={searchInputRef}
+                type="text"
+                placeholder="Digite o código do produto (ex: PH4701)..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value.toUpperCase())}
+                onKeyDown={handleKeyDown}
+                className="pl-10 pr-10"
+                autoComplete="off"
+              />
+              {searchQuery && (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => {
+                    setSearchQuery("");
+                    setHasSearched(false);
+                  }}
+                  className="absolute right-1 top-1/2 transform -translate-y-1/2 h-6 w-6 p-0"
+                >
+                  <X className="h-4 w-4" />
+                </Button>
+              )}
+            </div>
 
-          <Button
-            type="submit"
-            disabled={!searchQuery.trim() || isLoading}
-            className="w-full"
-          >
-            {isLoading ? (
-              <>
-                <LoadingSpinner size="sm" className="mr-2" />
-                Buscando...
-              </>
-            ) : (
-              <>
-                <Search className="h-4 w-4 mr-2" />
-                Buscar Produto
-              </>
-            )}
-          </Button>
-        </form>
+            <Button
+              type="submit"
+              disabled={!searchQuery.trim() || isLoading}
+              className="w-full"
+            >
+              {isLoading ? (
+                <>
+                  <LoadingSpinner size="sm" className="mr-2" />
+                  Buscando...
+                </>
+              ) : (
+                <>
+                  <Search className="h-4 w-4 mr-2" />
+                  Buscar Produto
+                </>
+              )}
+            </Button>
+          </form>
 
-        {/* Demo Search Suggestions - Apenas quando não há busca */}
-        {!hasSearched && !isLoading && (
-          <DemoSearchSuggestions onSearch={handleDemoSearch} isLoading={isLoading} />
-        )}
+          {/* Demo Search Suggestions - Apenas quando não há busca */}
+          {!hasSearched && !isLoading && (
+            <div className="shrink-0">
+              <DemoSearchSuggestions onSearch={handleDemoSearch} isLoading={isLoading} />
+            </div>
+          )}
 
-        {/* Dicas de Navegação */}
-        {products.length > 0 && (
-          <div className="flex flex-wrap gap-2 text-xs text-muted-foreground bg-muted/50 p-2 rounded">
-            <span className="flex items-center gap-1">
-              <ArrowUp className="h-3 w-3" />
-              <ArrowDown className="h-3 w-3" />
-              Navegar
-            </span>
-            <span className="flex items-center gap-1">
-              <CornerDownLeft className="h-3 w-3" />
-              Selecionar
-            </span>
-            <span>Esc - Cancelar</span>
-          </div>
-        )}
+          {/* Dicas de Navegação */}
+          {products.length > 0 && (
+            <div className="flex flex-wrap gap-2 text-xs text-muted-foreground bg-muted/50 p-2 rounded shrink-0">
+              <span className="flex items-center gap-1">
+                <ArrowUp className="h-3 w-3" />
+                <ArrowDown className="h-3 w-3" />
+                Navegar
+              </span>
+              <span className="flex items-center gap-1">
+                <CornerDownLeft className="h-3 w-3" />
+                Selecionar
+              </span>
+              <span>Esc - Cancelar</span>
+            </div>
+          )}
 
-        {/* Resultados */}
-        <div className="flex-1 overflow-hidden">
+          {/* Resultados */}
           {isLoading && (
             <div className="flex items-center justify-center py-8">
               <LoadingSpinner className="mr-2" />
