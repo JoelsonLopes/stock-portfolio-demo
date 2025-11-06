@@ -29,8 +29,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# AI Assistant configurations and context files
+.claude/
+.cursor/
+.taskmaster/
+CLAUDE.md
 .claude.md
 .gemini.md
+.aider*
 
 # Logs
 logs
