@@ -125,8 +125,9 @@ export async function POST(request: NextRequest) {
 
       try {
         if (strategy === "upsert_by_name" || strategy === "auto") {
-          // UPSERT por nome do produto (estratégia principal)
-          // Remove o ID dos dados para forçar UPSERT apenas por nome
+          // ✅ CORREÇÃO: Usar INSERT simples ao invés de UPSERT por nome
+          // pois não há constraint UNIQUE na coluna 'product'
+          // Remove o ID dos dados para forçar criação de novos produtos
           const batchWithoutId = deduplicatedBatch.map((item) => {
             const { id, ...itemWithoutId } = item;
             return itemWithoutId;
@@ -134,47 +135,20 @@ export async function POST(request: NextRequest) {
 
           const { data, error } = await supabase
             .from("products")
-            .upsert(batchWithoutId, {
-              onConflict: "product",
-              ignoreDuplicates: false,
-            })
+            .insert(batchWithoutId)
             .select();
 
           if (error) {
-            console.error("Erro no UPSERT por nome:", error);
+            console.error("Erro no INSERT:", error);
             errors.push(
               `Lote ${Math.floor(i / batchSize) + 1}: ${error.message}`
             );
             continue;
           }
 
-          // Contagem inteligente: detecta inserções, atualizações reais e produtos sem mudança
+          // ✅ CORREÇÃO: Com INSERT simples, todos são novos produtos
           if (data) {
-            for (const item of data) {
-              const timeDiff = Math.abs(
-                new Date(item.created_at).getTime() -
-                  new Date(item.updated_at).getTime()
-              );
-
-              if (timeDiff < 1000) {
-                // Produto novo: created_at ≈ updated_at
-                insertedCount++;
-              } else {
-                // Produto existente foi processado
-                // Com o novo trigger: updated_at só muda se houve alteração real
-                // Vamos verificar se updated_at foi alterado recentemente (últimos 5 segundos)
-                const now = new Date().getTime();
-                const updatedTime = new Date(item.updated_at).getTime();
-
-                if (now - updatedTime < 5000) {
-                  // updated_at foi alterado recentemente = atualização real
-                  updatedCount++;
-                } else {
-                  // updated_at antigo = produto não foi realmente alterado
-                  unchangedCount++;
-                }
-              }
-            }
+            insertedCount += data.length;
           }
         } else if (
           strategy === "upsert_by_id" &&
