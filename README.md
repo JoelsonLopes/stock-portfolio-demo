@@ -229,10 +229,21 @@ Navigate to [http://localhost:3000](http://localhost:3000)
 
 ### 🔑 Demo Credentials
 
+After deployment, you can login with these demo accounts:
+
+**Regular User:**
 ```
-Username: demo
+Username: Demo User
 Password: Demo123!
 ```
+
+**Admin User:**
+```
+Username: Demo Admin
+Password: Admin123!
+```
+
+> **Note:** The demo database is pre-populated with 34 products, 20 clients, and 15 sample orders distributed between the two demo users
 
 ## 📁 Project Structure
 
