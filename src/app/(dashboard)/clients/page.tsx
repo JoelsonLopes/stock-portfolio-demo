@@ -67,7 +67,7 @@ export default function ClientsPage() {
         {/* Demo Search Suggestions - Overlay absoluto que aparece abaixo */}
         {!hasSearched && (
           <div
-            className={`absolute top-full left-0 right-0 mt-4 z-10 transition-all duration-500 ease-in-out hidden lg:block ${
+            className={`absolute top-full left-0 right-0 -mt-2 pt-6 z-10 transition-all duration-500 ease-in-out hidden lg:block ${
               showSuggestions
                 ? "opacity-100 translate-y-0 scale-100"
                 : "opacity-0 -translate-y-4 scale-95 pointer-events-none"
