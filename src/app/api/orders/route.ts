@@ -421,10 +421,20 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const nextOrderNumber =
-      lastOrder && lastOrder.length > 0 && lastOrder[0].order_number
-        ? (parseInt(lastOrder[0].order_number, 10) + 1).toString()
-        : "1";
+    console.log("📋 Último pedido encontrado:", lastOrder);
+
+    // ✅ CORREÇÃO: Extrair número do order_number removendo prefixos como "PED-"
+    let nextOrderNumber = "1";
+    if (lastOrder && lastOrder.length > 0 && lastOrder[0].order_number) {
+      const currentNumber = lastOrder[0].order_number;
+      // Extrair apenas os dígitos do order_number
+      const numericPart = currentNumber.replace(/\D/g, "");
+      if (numericPart) {
+        nextOrderNumber = (parseInt(numericPart, 10) + 1).toString();
+      }
+    }
+
+    console.log("🔢 Próximo número do pedido:", nextOrderNumber);
 
     // Preparar dados do pedido principal
     // ✅ CORREÇÃO: Calcular totais baseado nos itens (quantity * unit_price)
@@ -485,15 +495,17 @@ export async function POST(request: NextRequest) {
         unit_price: item.unit_price,
         subtotal: item.quantity * item.unit_price, // ✅ CORREÇÃO: Calcular subtotal
         original_unit_price: item.original_unit_price || item.unit_price,
-        discount_id: item.discount_id,
+        discount_id: item.discount_id || null, // ✅ CORREÇÃO: null ao invés de undefined
         discount_percentage: item.discount_percentage || 0,
         discount_amount: item.discount_amount || 0,
         total_price: item.total_price,
         commission_percentage: item.commission_percentage || 0,
-        client_ref: item.client_ref,
+        client_ref: item.client_ref || null, // ✅ CORREÇÃO: null ao invés de undefined
         pending_quantity: item.pending_quantity || 0, // 🔥 NOVO: Quantidade pendente
         has_pending: item.has_pending || false, // 🔥 NOVO: Flag de pendência
       }));
+
+      console.log("📦 Itens a serem inseridos:", JSON.stringify(orderItems, null, 2));
 
       const { error: itemsError } = await supabase
         .from("order_items")
