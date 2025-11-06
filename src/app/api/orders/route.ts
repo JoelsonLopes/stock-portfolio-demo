@@ -422,8 +422,8 @@ export async function POST(request: NextRequest) {
     }
 
     const nextOrderNumber =
-      lastOrder && lastOrder.length > 0
-        ? (parseInt(lastOrder[0].order_number) + 1).toString()
+      lastOrder && lastOrder.length > 0 && lastOrder[0].order_number
+        ? (parseInt(lastOrder[0].order_number, 10) + 1).toString()
         : "1";
 
     // Preparar dados do pedido principal
