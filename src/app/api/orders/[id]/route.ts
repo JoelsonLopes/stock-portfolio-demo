@@ -81,7 +81,7 @@ export async function GET(
           code,
           client,
           city,
-          cnpj
+          cpf_cnpj
         ),
         payment_conditions:payment_condition_id (
           id,
