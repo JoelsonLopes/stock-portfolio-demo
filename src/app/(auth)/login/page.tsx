@@ -12,6 +12,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/modules/auth/presentation/providers/auth.provider";
+import { DemoCredentials } from "@/presentation/components/auth/DemoCredentials";
 import { LoadingSpinner } from "@/shared/presentation/components/ui/loading-spinner";
 import { Package, User } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -22,6 +23,7 @@ export default function LoginPage() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showCredentials, setShowCredentials] = useState(false);
   const { login } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
@@ -69,79 +71,148 @@ export default function LoginPage() {
     }
   };
 
+  const handleQuickLogin = async (
+    username: string,
+    password: string,
+    type: "user" | "admin"
+  ) => {
+    setName(username);
+    setPassword(password);
+    setLoading(true);
+
+    try {
+      const result = await login(username, password);
+      if (result.success) {
+        toast({
+          title: `Bem-vindo, ${type === "admin" ? "Administrador" : "Usuário Demo"}!`,
+          description: "Redirecionando para o painel...",
+        });
+
+        setTimeout(() => {
+          router.push(result.redirectTo || "/dashboard");
+        }, 100);
+      } else {
+        toast({
+          title: "Erro no login",
+          description: result.error || "Falha ao fazer login automático.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      toast({
+        title: "Erro no login",
+        description: "Ocorreu um erro inesperado. Tente novamente.",
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background px-4">
-      <Card className="w-full max-w-md border-2 shadow-lg backdrop-blur-sm bg-card/90">
-        <CardHeader className="text-center space-y-4">
-          <div className="flex justify-center mb-2">
-            <Package className="h-16 w-16 text-primary" />
-          </div>
-          <div>
-            <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
-              Demo Parts Co.
-            </CardTitle>
-            <p className="text-sm text-primary font-medium mt-1">
-              Automotive Parts & Supplies
-            </p>
-          </div>
-          <CardDescription className="text-muted-foreground">
-            Acesse o sistema para consultar o estoque.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="space-y-2">
-              <Label htmlFor="name" className="text-foreground font-medium">
-                Nome de usuário
-              </Label>
-              <div className="relative">
-                <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-4 w-4" />
-                <Input
-                  id="name"
-                  type="text"
-                  placeholder="Digite seu nome de usuário"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  className="pl-10 border-input focus:border-primary focus:ring-primary"
-                  required
-                  disabled={loading}
-                  autoComplete="username"
-                />
+    <div className="min-h-screen flex items-center justify-center bg-background px-4 py-8">
+      {/* Container principal - Centralizado */}
+      <div
+        className="relative w-full max-w-md mx-auto"
+        onMouseEnter={() => setShowCredentials(true)}
+        onMouseLeave={() => setShowCredentials(false)}
+      >
+        {/* Login Card - Fixo e centralizado */}
+        <Card className="w-full border-2 shadow-lg backdrop-blur-sm bg-card/90">
+            <CardHeader className="text-center space-y-4">
+              <div className="flex justify-center mb-2">
+                <Package className="h-16 w-16 text-primary" />
               </div>
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="password" className="text-foreground font-medium">
-                Senha
-              </Label>
-              <Input
-                id="password"
-                type="password"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="border-input focus:border-primary focus:ring-primary"
-                required
-                disabled={loading}
-                autoComplete="current-password"
-              />
-            </div>
-            <Button
-              type="submit"
-              className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-colors"
-              disabled={loading}
-            >
-              {loading ? (
-                <>
-                  <LoadingSpinner size="sm" className="mr-2" />
-                  Entrando...
-                </>
-              ) : (
-                "Entrar no Sistema"
-              )}
-            </Button>
-          </form>
-        </CardContent>
-      </Card>
+              <div>
+                <CardTitle className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                  Demo Parts Co.
+                </CardTitle>
+                <p className="text-sm text-primary font-medium mt-1">
+                  Automotive Parts & Supplies
+                </p>
+              </div>
+              <CardDescription className="text-muted-foreground">
+                Acesse o sistema para consultar o estoque.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div className="space-y-2">
+                  <Label htmlFor="name" className="text-foreground font-medium">
+                    Nome de usuário
+                  </Label>
+                  <div className="relative">
+                    <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-primary h-4 w-4" />
+                    <Input
+                      id="name"
+                      type="text"
+                      placeholder="Digite seu nome de usuário"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      className="pl-10 border-input focus:border-primary focus:ring-primary"
+                      required
+                      disabled={loading}
+                      autoComplete="username"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="password" className="text-foreground font-medium">
+                    Senha
+                  </Label>
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="••••••••"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="border-input focus:border-primary focus:ring-primary"
+                    required
+                    disabled={loading}
+                    autoComplete="current-password"
+                  />
+                </div>
+                <Button
+                  type="submit"
+                  className="w-full bg-primary hover:bg-primary/90 text-primary-foreground transition-colors"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <LoadingSpinner size="sm" className="mr-2" />
+                      Entrando...
+                    </>
+                  ) : (
+                    "Entrar no Sistema"
+                  )}
+                </Button>
+              </form>
+            </CardContent>
+          </Card>
+
+        {/* Demo Credentials - Overlay absoluto que aparece ao lado */}
+        <div
+          className={`absolute left-full top-0 -ml-0 pl-6 w-full max-w-md h-full transition-all duration-500 ease-in-out hidden lg:block ${
+            showCredentials
+              ? "opacity-100 translate-x-0 scale-100"
+              : "opacity-0 translate-x-8 scale-95 pointer-events-none"
+          }`}
+          onMouseEnter={() => setShowCredentials(true)}
+          onMouseLeave={() => setShowCredentials(false)}
+        >
+          <DemoCredentials
+            onQuickLogin={handleQuickLogin}
+            isLoading={loading}
+            onMouseEnter={() => setShowCredentials(true)}
+            onMouseLeave={() => setShowCredentials(false)}
+          />
+        </div>
+
+        {/* Mobile: Credenciais abaixo do formulário */}
+        <div className="mt-6 lg:hidden">
+          <DemoCredentials onQuickLogin={handleQuickLogin} isLoading={loading} />
+        </div>
+      </div>
     </div>
   );
 }
