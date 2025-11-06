@@ -23,7 +23,7 @@ const ORDER_STATUS_OPTIONS = [
 interface OrderData {
   id: string;
   order_number: string;
-  client_id: number;
+  client_id: string; // ✅ UUID como string
   payment_condition_id: string;
   notes: string;
   status: string;
@@ -31,7 +31,7 @@ interface OrderData {
   shipping_rate: number;
   created_at: string;
   clients: {
-    id: number;
+    id: string; // ✅ UUID como string
     code: string;
     client: string;
     city?: string;
@@ -42,7 +42,7 @@ interface OrderData {
   };
   order_items: Array<{
     id: string;
-    product_id: number;
+    product_id: string; // ✅ UUID como string
     product_code?: string;
     product_name?: string;
     quantity: number;
@@ -57,7 +57,7 @@ interface OrderData {
     pending_quantity?: number; // 🔥 NOVO: Campo de pendência
     has_pending?: boolean; // 🔥 NOVO: Flag de pendência
     products?: {
-      id: number;
+      id: string; // ✅ UUID como string
       product: string;
       price: number;
       stock: number;

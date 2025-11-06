@@ -1,6 +1,6 @@
 export interface OrderItem {
   id: string;
-  product_id: number;
+  product_id: string; // ✅ UUID como string
   product_code?: string; // Apenas para exibição no frontend
   product_name?: string; // Apenas para exibição no frontend
   product_group_name?: string; // Nome do grupo do produto para exibição
@@ -36,7 +36,7 @@ export interface PaymentCondition {
 }
 
 export interface OrderFormData {
-  client_id: number | null;
+  client_id: string | null; // ✅ UUID como string
   payment_condition_id: string | null;
   notes: string;
   items: OrderItem[];

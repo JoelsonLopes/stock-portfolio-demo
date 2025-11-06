@@ -13,7 +13,7 @@ interface OrderSearchParams {
 
 interface OrderItem {
   id: string;
-  product_id: number;
+  product_id: string; // ✅ UUID como string
   product_code: string;
   product_name: string;
   quantity: number;
@@ -44,11 +44,11 @@ interface Order {
   notes?: string;
   created_at: string;
   updated_at: string;
-  client_id: number;
+  client_id: string; // ✅ UUID como string
   payment_condition_id: string;
   user_id: string;
   clients: {
-    id: number;
+    id: string; // ✅ UUID como string
     code: string;
     client: string;
   };
