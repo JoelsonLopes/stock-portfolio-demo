@@ -64,13 +64,13 @@ export default function ProductsPage() {
           </CardContent>
         </Card>
 
-        {/* Demo Search Suggestions - Overlay absoluto que aparece ao lado */}
+        {/* Demo Search Suggestions - Overlay absoluto que aparece acima */}
         {!hasSearched && (
           <div
-            className={`absolute left-full top-0 -ml-0 pl-6 w-full max-w-md transition-all duration-500 ease-in-out hidden lg:block ${
+            className={`absolute top-full left-0 right-0 mt-4 z-10 transition-all duration-500 ease-in-out hidden lg:block ${
               showSuggestions
-                ? "opacity-100 translate-x-0 scale-100"
-                : "opacity-0 translate-x-8 scale-95 pointer-events-none"
+                ? "opacity-100 translate-y-0 scale-100"
+                : "opacity-0 -translate-y-4 scale-95 pointer-events-none"
             }`}
             onMouseEnter={() => setShowSuggestions(true)}
             onMouseLeave={() => setShowSuggestions(false)}

@@ -30,52 +30,58 @@ export function DemoSearchSuggestions({ onSearch, isLoading }: DemoSearchSuggest
   ];
 
   return (
-    <Card className="border-dashed border-2 border-blue-200 bg-blue-50/50 dark:border-blue-800 dark:bg-blue-950/20">
-      <CardContent className="pt-6 space-y-4">
+    <Card className="border-2 border-blue-500/20 bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/30 dark:to-indigo-950/30 shadow-lg">
+      <CardContent className="p-6 space-y-5">
         {/* Header */}
-        <div className="flex items-start gap-3">
-          <Lightbulb className="h-5 w-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
-          <div className="space-y-1 flex-1">
-            <h3 className="text-sm font-semibold text-blue-900 dark:text-blue-100">
+        <div className="flex items-center gap-3 pb-3 border-b border-blue-200 dark:border-blue-800">
+          <div className="p-2 rounded-lg bg-blue-500/10 dark:bg-blue-500/20">
+            <Lightbulb className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-base font-bold text-blue-900 dark:text-blue-100">
               Exemplos de Pesquisa
             </h3>
-            <p className="text-xs text-blue-700 dark:text-blue-300">
-              Clique em qualquer exemplo abaixo para testar a busca de produtos
+            <p className="text-xs text-blue-700 dark:text-blue-300 mt-0.5">
+              Clique para testar a busca de produtos
             </p>
           </div>
         </div>
 
         {/* Search Examples */}
-        <div className="space-y-4">
+        <div className="space-y-5">
           {searchExamples.map((category, idx) => (
-            <div key={idx} className="space-y-2">
-              <h4 className="text-xs font-semibold text-blue-800 dark:text-blue-200">
+            <div key={idx} className="space-y-3">
+              <h4 className="text-sm font-bold text-blue-800 dark:text-blue-200 uppercase tracking-wide">
                 {category.category}
               </h4>
-              <div className="space-y-2">
+              <div className="grid gap-3">
                 {category.examples.map((example, exIdx) => (
                   <div
                     key={exIdx}
-                    className="flex items-center gap-2 p-2 rounded-lg bg-white dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800"
+                    className="group relative overflow-hidden rounded-xl bg-white dark:bg-slate-900/50 border border-blue-100 dark:border-blue-900 shadow-sm hover:shadow-md hover:border-blue-300 dark:hover:border-blue-700 transition-all duration-200"
                   >
-                    <div className="flex-1 space-y-0.5">
-                      <code className="text-xs font-mono font-semibold text-blue-900 dark:text-blue-100">
-                        {example.query}
-                      </code>
-                      <p className="text-xs text-blue-600 dark:text-blue-300">
-                        {example.description}
-                      </p>
+                    <div className="flex items-center gap-3 p-4">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <code className="text-sm font-mono font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/50 px-2 py-1 rounded">
+                            {example.query}
+                          </code>
+                        </div>
+                        <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+                          {example.description}
+                        </p>
+                      </div>
+                      <Button
+                        variant="default"
+                        size="sm"
+                        className="h-9 px-4 bg-blue-600 hover:bg-blue-700 text-white shadow-sm hover:shadow transition-all duration-200 shrink-0"
+                        onClick={() => onSearch(example.query)}
+                        disabled={isLoading}
+                      >
+                        <Search className="h-4 w-4 mr-2" />
+                        Testar
+                      </Button>
                     </div>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="h-8 px-3 text-blue-700 hover:text-blue-900 hover:bg-blue-100 dark:text-blue-300 dark:hover:text-blue-100 dark:hover:bg-blue-800"
-                      onClick={() => onSearch(example.query)}
-                      disabled={isLoading}
-                    >
-                      <Search className="h-3.5 w-3.5 mr-1.5" />
-                      Testar
-                    </Button>
                   </div>
                 ))}
               </div>
@@ -84,10 +90,13 @@ export function DemoSearchSuggestions({ onSearch, isLoading }: DemoSearchSuggest
         </div>
 
         {/* Info */}
-        <div className="pt-2 border-t border-blue-200 dark:border-blue-800">
-          <p className="text-xs text-blue-600 dark:text-blue-400 text-center">
-            💡 Dica: A busca funciona com códigos de produto, descrições e equivalências
-          </p>
+        <div className="pt-4 border-t border-blue-200 dark:border-blue-800">
+          <div className="flex items-center justify-center gap-2 text-xs text-blue-700 dark:text-blue-300 bg-blue-100/50 dark:bg-blue-900/30 rounded-lg py-2.5 px-4">
+            <span className="text-base">💡</span>
+            <p className="font-medium">
+              A busca funciona com códigos de produto, descrições e equivalências
+            </p>
+          </div>
         </div>
       </CardContent>
     </Card>
