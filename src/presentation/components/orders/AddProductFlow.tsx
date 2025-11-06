@@ -192,10 +192,10 @@ export function AddProductFlow({
 
     const newItem: OrderItem = {
       id: Math.random().toString(36).substr(2, 9),
-      product_id: parseInt(selectedProduct.id.toString()),
+      product_id: selectedProduct.id, // UUID como string, não converter para número
       product_code: selectedProduct.product,
       product_name: selectedProduct.product,
-      product_group_name: selectedProduct.groupName,
+      product_group_name: selectedProduct.groupName || undefined,
       quantity: actualQuantity, // Quantidade efetiva (disponível)
       unit_price: unitPriceWithDiscount,
       original_unit_price: selectedProduct.price,
