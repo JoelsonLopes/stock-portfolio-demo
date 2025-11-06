@@ -13,6 +13,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { ClientEntity } from "@/modules/clients/domain/entities/client.entity";
+import { DemoSearchSuggestions } from "@/presentation/components/clients/DemoSearchSuggestions";
 import { useClientSearch } from "@/presentation/hooks/useClientSearch";
 import { LoadingSpinner } from "@/shared/presentation/components/ui/loading-spinner";
 import { AlertCircle, Check, Search, Users, X } from "lucide-react";
@@ -70,6 +71,13 @@ export function ClientSelector({
     if (e.key === "Enter") {
       handleSubmit(e);
     }
+  };
+
+  const handleDemoSearch = (query: string) => {
+    setInputValue(query);
+    setSearchQuery(query);
+    setHasSearched(true);
+    refetch();
   };
 
   const formatCnpj = (cnpj?: string) => {
@@ -196,6 +204,11 @@ export function ClientSelector({
           </form>
         </CardContent>
       </Card>
+
+      {/* Demo Search Suggestions - Apenas quando não há busca */}
+      {!hasSearched && !isLoading && (
+        <DemoSearchSuggestions onSearch={handleDemoSearch} isLoading={isLoading} />
+      )}
 
       {/* Estados da Busca */}
       {isLoading && (

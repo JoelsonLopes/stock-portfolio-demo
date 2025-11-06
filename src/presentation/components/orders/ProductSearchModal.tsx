@@ -18,6 +18,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import type { ProductWithEquivalences } from "@/modules/inventory/domain/entities/product-with-equivalences.entity";
+import { DemoSearchSuggestions } from "@/presentation/components/products/DemoSearchSuggestions";
 import { useProductSearchWithEquivalences } from "@/presentation/hooks/useProductSearchWithEquivalences";
 import { LoadingSpinner } from "@/shared/presentation/components/ui/loading-spinner";
 import {
@@ -85,6 +86,12 @@ export function ProductSearchModal({
       setHasSearched(true);
       setSelectedIndex(0);
     }
+  };
+
+  const handleDemoSearch = (query: string) => {
+    setSearchQuery(query);
+    setHasSearched(true);
+    setSelectedIndex(0);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -187,6 +194,11 @@ export function ProductSearchModal({
             )}
           </Button>
         </form>
+
+        {/* Demo Search Suggestions - Apenas quando não há busca */}
+        {!hasSearched && !isLoading && (
+          <DemoSearchSuggestions onSearch={handleDemoSearch} isLoading={isLoading} />
+        )}
 
         {/* Dicas de Navegação */}
         {products.length > 0 && (
