@@ -106,7 +106,7 @@ export class SupabaseProductRepository implements ProductRepository {
 					"id, product, stock, price, application, created_at, updated_at, group_id, product_groups(name)",
 					{ count: "exact" }
 				)
-				.or(`product.ilike.%${query}%, application.ilike.%${query}%`)
+				.or(`product.ilike.%${query}%,application.ilike.%${query}%`)
 				.range(start, start + pageSize - 1)
 				.order("product");
 
