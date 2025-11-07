@@ -1,6 +1,6 @@
 export interface OrderItem {
   id: string;
-  product_id: string; // ✅ UUID como string
+  product_id: number; // BIGINT do PostgreSQL
   product_code?: string; // Apenas para exibição no frontend
   product_name?: string; // Apenas para exibição no frontend
   product_group_name?: string; // Nome do grupo do produto para exibição

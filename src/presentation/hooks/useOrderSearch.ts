@@ -13,7 +13,7 @@ interface OrderSearchParams {
 
 interface OrderItem {
   id: string;
-  product_id: string; // ✅ UUID como string
+  product_id: number; // BIGINT do PostgreSQL
   product_code: string;
   product_name: string;
   quantity: number;

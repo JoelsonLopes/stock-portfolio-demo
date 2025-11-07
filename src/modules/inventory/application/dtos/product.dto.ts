@@ -1,8 +1,8 @@
-import { ID } from "@/shared/types/common";
+import { ProductID } from "@/shared/types/common";
 import type { Product } from "../../domain/entities/product.entity";
 
 export interface ProductDTO {
-  id: ID;
+  id: ProductID;
   product: string;
   stock: number;
   price: number;

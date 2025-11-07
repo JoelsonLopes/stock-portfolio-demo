@@ -42,7 +42,7 @@ interface OrderData {
   };
   order_items: Array<{
     id: string;
-    product_id: string; // ✅ UUID como string
+    product_id: number; // BIGINT do PostgreSQL
     product_code?: string;
     product_name?: string;
     quantity: number;
@@ -57,7 +57,7 @@ interface OrderData {
     pending_quantity?: number; // 🔥 NOVO: Campo de pendência
     has_pending?: boolean; // 🔥 NOVO: Flag de pendência
     products?: {
-      id: string; // ✅ UUID como string
+      id: number; // BIGINT do PostgreSQL
       product: string;
       price: number;
       stock: number;

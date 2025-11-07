@@ -1,4 +1,5 @@
 export type ID = string;
+export type ProductID = number; // BIGINT do PostgreSQL para products
 
 export interface BaseEntity {
   id: ID;

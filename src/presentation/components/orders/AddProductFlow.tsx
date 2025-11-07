@@ -192,7 +192,7 @@ export function AddProductFlow({
 
     const newItem: OrderItem = {
       id: Math.random().toString(36).substr(2, 9),
-      product_id: selectedProduct.id, // UUID como string, não converter para número
+      product_id: selectedProduct.id, // BIGINT do PostgreSQL
       product_code: selectedProduct.product,
       product_name: selectedProduct.product,
       product_group_name: selectedProduct.groupName || undefined,

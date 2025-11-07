@@ -1,7 +1,7 @@
-import { ID } from "@/shared/types/common";
+import { ProductID } from "@/shared/types/common";
 
 export interface Product {
-  id: ID;
+  id: ProductID;
   product: string;
   stock: number;
   price: number;
@@ -14,7 +14,7 @@ export interface Product {
 
 export class ProductEntity implements Product {
   constructor(
-    public readonly id: ID,
+    public readonly id: ProductID,
     public readonly product: string,
     public readonly price: number,
     public readonly stock: number,
@@ -42,7 +42,7 @@ export class ProductEntity implements Product {
   }
 
   static create(props: {
-    id: ID;
+    id: ProductID;
     product: string;
     price: number;
     stock: number;
