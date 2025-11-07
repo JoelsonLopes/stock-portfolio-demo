@@ -9,22 +9,33 @@ interface DemoSearchSuggestionsProps {
   isLoading?: boolean;
 }
 
-export function DemoSearchSuggestions({ onSearch, isLoading }: DemoSearchSuggestionsProps) {
+export function DemoSearchSuggestions({
+  onSearch,
+  isLoading,
+}: DemoSearchSuggestionsProps) {
   const searchExamples = [
     {
-      category: "Pesquisas por Categoria",
+      category: "Pesquisas por aplicações",
       examples: [
-        { query: "filtro", description: "Filtro de Ar, Óleo, Combustível e Cabine" },
-        { query: "óleo", description: "Óleo 5W30, 10W40, 15W40, 20W50 (Sintético/Mineral)" },
-        { query: "palheta", description: "Palheta Universal e Palheta Silicone" },
+        {
+          query: "PALIO",
+          description: "Filtro de Ar, Óleo, Combustível e Cabine",
+        },
+        {
+          query: "óleo",
+          description: "Óleo 5W30, 10W40, 15W40, 20W50 (Sintético/Mineral)",
+        },
+        {
+          query: "palheta",
+          description: "Palheta Universal e Palheta Silicone",
+        },
       ],
     },
     {
       category: "Exemplos de Produtos Reais",
       examples: [
-        { query: "Óleo 5W30 Sintético", description: "Produto mais vendido" },
-        { query: "Filtro de Óleo", description: "Item de alta demanda" },
-        { query: "Palheta Universal", description: "Produto popular" },
+        { query: "WUNI0001", description: "Produto mais vendido" },
+        { query: "AF18", description: "Produto popular" },
       ],
     },
   ];
@@ -94,7 +105,8 @@ export function DemoSearchSuggestions({ onSearch, isLoading }: DemoSearchSuggest
           <div className="flex items-center justify-center gap-2 text-xs text-blue-700 dark:text-blue-300 bg-blue-100/50 dark:bg-blue-900/30 rounded-lg py-2.5 px-4">
             <span className="text-base">💡</span>
             <p className="font-medium">
-              A busca funciona com códigos de produto, descrições e equivalências
+              A busca funciona com códigos de produto, descrições e
+              equivalências
             </p>
           </div>
         </div>
